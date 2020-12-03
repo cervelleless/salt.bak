@@ -27,21 +27,4 @@
 ;; it early!
 (setq package-enable-at-startup nil)
 
-;; garbage collection
-;; The default is 800 kilobytes.  Measured in bytes.
-(defvar last-file-name-handler-alist file-name-handler-alist)
-(setq gc-cons-threshold 402653184
-      gc-cons-percentage 0.75
-      file-name-handler-alist nil)
-
-;; ... your whole emacs config here ...
-
-;; after startup, it is important you reset this to some reasonable default. A large
-;; gc-cons-threshold will cause freezing and stuttering during long-term
-;; interactive use. I find these are nice defaults:
-(add-hook! 'emacs-startup-hook
-  (setq gc-cons-threshold 16777216
-        gc-cons-percentage 0.1
-        file-name-handler-alist last-file-name-handler-alist))
-
 ;;; early-init.el ends here
