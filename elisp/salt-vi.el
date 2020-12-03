@@ -19,10 +19,13 @@
 ;;
 ;;; Code:
 
+
+
+
 (require 'crux)
 (require 'hydra)
 ;; (require 'bind-key)
-
+;; sulfur, salt and mercury.
 (defhydra salt-vi (:pre (progn (set-cursor-color "#40e0d0")
                                (setq cursor-type 'box))
                    :post (progn (setq cursor-type 'bar)
@@ -35,9 +38,11 @@
                   (forward-char))
                 (message "-- INSERT --"))) :color blue)
   ("b" backward-word)
-  ("c" nil)
-  ("dd" crux-kill-whole-line)
-  ("dw" kill-word :color blue)
+  ("cw" kill-word :color blue )
+  ("dd" (lambda () (interactive)
+          (crux-kill-whole-line)
+          (delete-char 1)))
+  ("dw" kill-word)
   ("e" nil)
   ("f" nil)
   ("gg" beginning-of-buffer)
@@ -60,10 +65,12 @@
   ("q" nil)
   ("r" (lambda () (interactive)
            (insert (read-char))
-           (delete-char 1)))
+           (delete-char 1)
+           (backward-char)))
   ("s" swiper)
   ("t" nil)
-  ("u" undo-tree-undo)
+  ("uu" undo-tree-undo)
+  ("uv" undo-tree-visualize)
   ("v" nil)
   ("w" forward-word)
   ("x" (delete-char 1))
@@ -103,7 +110,7 @@
   ("-" er/expand-region)
   ("^" crux-move-beginning-of-line)
   ("$" move-end-of-line)
-  ("M-x" counsel-M-x)
+  ("M-x" counsel-M-x :color blue)
   ("<escape>" keyboard-escape-quit)
   ("SPC" salt-launcher/body :color blue))
 
@@ -115,6 +122,7 @@
                                       (backward-char))
                                     (salt-vi/body))))
 
+(add-hook 'minibuffer-setup-hook 'transient-quit-all)
 (add-hook 'minibuffer-exit-hook 'salt-vi/body)
 
 (provide 'salt-vi)

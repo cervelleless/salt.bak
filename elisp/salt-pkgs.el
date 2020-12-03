@@ -21,6 +21,8 @@
 
 (eval-when-compile
   (require 'use-package))
+(require 'quelpa-use-package)
+
 ;; (require 'bind-key)
 
 ;; core packages
@@ -40,7 +42,9 @@
   :defer t)
 
 (use-package rainbow-mode
+  :quelpa (rainbow-mode :fetcher github :repo "emacsmirror/rainbow-mode")
   :defer t)
+
 ;; emojify
 ;; (use-package emojify
 ;;  :ensure t
@@ -58,6 +62,11 @@
   :hook ((eshell-mode . (lambda () (require 'eshell-z)))
          (eshell-z-change-dir .  (lambda () (eshell/pushd (eshell/pwd))))))
 
+(use-package esh-help
+  :defer t
+  :config
+  (setup-esh-help-eldoc))
+
 ;; ace-window
 (use-package ace-window
   :defer t
@@ -65,15 +74,14 @@
   :config
   (define-key global-map (kbd "M-o") 'ace-window))
 
-
 ;; expand-region
 (use-package expand-region
   :defer t)
 
-
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
-  :defer t)
+  :defer t
+  :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 
 ;; lispy
 
@@ -82,13 +90,14 @@
   :init
   (setq show-paren-delay 0
         show-paren-style 'parenthesis)
-  :config
-  (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-  (add-hook 'racket-mode-hook (lambda () (lispy-mode 1)))
-  (add-hook 'lispy-mode-hook (lambda () (show-paren-mode 1))))
+  :hook
+  (emacs-lisp-mode . lispy-mode)
+  (racket-mode-hook . lispy-mode)
+  (lispy-mode-hook . show-paren-mode))
 
 ;; undo tree
 (use-package undo-tree
+  :quelpa (undo-tree :fetcher github :repo "emacsmirror/undo-tree")
   :defer t
   :commands (undo-tree-undo global-undo-tree-mode)
   :config
@@ -108,10 +117,6 @@
 ;; magit
 (use-package magit
  :defer t)
-
-;; nlinum
-(use-package nlinum
-  :defer t)
 
 ;; yaml
 (use-package yaml-mode
@@ -180,7 +185,8 @@
 
 ;; flyspell
 (use-package flyspell
-  :defer t)
+  :defer t
+  :hook (emacs-lisp-mode . flyspell-prog-mode))
 
 
 

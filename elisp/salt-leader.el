@@ -38,7 +38,10 @@
 ;; files
 (defhydra salt-launcher-files (:color blue :columns 5 :foreign-keys warn :post salt-vi/body)
   "File Toolset"
-  ("f" counsel-find-file "Find file")
+  ("f" (lambda () (interactive)
+         (counsel-find-file)
+         (salt-vi/nil))
+         "Find file")
   ("q" salt-launcher/body "Previous page" :exit t)
   ("r" counsel-recentf "Recent file")
   ("s" save-buffer "Save file")

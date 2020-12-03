@@ -34,15 +34,16 @@
   (setq ivy-use-virutal-buffers t
         enable-recursive-minibuffers t
         ivy-height 15)
+  :hook (after-init . ivy-mode)
   :config
-  (define-key ivy-minibuffer-map (kbd "ESC") 'minibuffer-keyboard-quit)
-  (ivy-mode 1))
+  (define-key ivy-minibuffer-map (kbd "ESC") 'minibuffer-keyboard-quit))
 
 (use-package ivy-rich
   :defer t
-  :commands ivy-rich-mode
+  :after ivy
+  :hook (ivy-mode . ivy-rich-mode)
   :config
-  (ivy-rich-mode 1))
+  (setq ivy-rich-parse-remote-buffer nil))
 
 (use-package swiper
   :defer t
@@ -53,27 +54,19 @@
   :defer t
   :init
   (define-key global-map (kbd "M-x") 'counsel-M-x)
-  (define-key global-map (kbd "C-x C-f") 'counsel-find-file)
-  :config
-  (counsel-mode 1))
+  (define-key global-map (kbd "C-x C-f") 'counsel-find-file))
 
 ;; prescient
-(use-package prescient
-  :defer t
-  :commands prescient-persist-mode
-  :config
-  (prescient-persist-mode 1))
-
+;; after remove :after (:all perscient ivy) , it works.
 (use-package ivy-prescient
   :defer t
-  :after (:all prescient ivy)
-  :config
-  (ivy-prescient-mode 1))
+  :after ivy
+  :hook (ivy-mode . ivy-prescient-mode)
+  :hook (ivy-prescient-mode . prescient-persist-mode))
 
 ;; projectile
 (use-package projectile
   :defer t
-  :after ivy
   :init
   (setq projectile-completion-system 'ivy))
 
