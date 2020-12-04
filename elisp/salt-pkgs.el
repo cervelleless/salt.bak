@@ -19,9 +19,23 @@
 ;;
 ;;; Code:
 
+(use-package f          ;; files
+  :defer t)
+(use-package dash       ;; lists
+  :defer t) 
+(use-package ht         ;; hash-tables
+  :defer t) 
+(use-package s          ;; strings
+  :defer t)
+(use-package a         ;; association lists
+  :defer t)
+(use-package anaphora  ;; anaphora
+  :defer t) 
+
+
 (eval-when-compile
   (require 'use-package))
-(require 'quelpa-use-package)
+;; (require 'quelpa-use-package)
 
 ;; (require 'bind-key)
 
@@ -42,7 +56,7 @@
   :defer t)
 
 (use-package rainbow-mode
-  :quelpa (rainbow-mode :fetcher github :repo "emacsmirror/rainbow-mode")
+;;  :quelpa (rainbow-mode :fetcher github :repo "emacsmirror/rainbow-mode")
   :defer t)
 
 ;; emojify
@@ -92,12 +106,12 @@
         show-paren-style 'parenthesis)
   :hook
   (emacs-lisp-mode . lispy-mode)
-  (racket-mode-hook . lispy-mode)
-  (lispy-mode-hook . show-paren-mode))
+  (racket-mode . lispy-mode)
+  (lispy-mode . show-paren-mode))
 
 ;; undo tree
 (use-package undo-tree
-  :quelpa (undo-tree :fetcher github :repo "emacsmirror/undo-tree")
+;;  :quelpa (undo-tree :fetcher github :repo "emacsmirror/undo-tree")
   :defer t
   :commands (undo-tree-undo global-undo-tree-mode)
   :config
@@ -136,8 +150,7 @@
 
 ;; crux
 (use-package crux
-  :defer t
-  :commands crux-beginning-of-line)
+  :defer t)
 
 ;; ;; super save
 (use-package super-save
