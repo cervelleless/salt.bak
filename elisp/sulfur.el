@@ -1,4 +1,4 @@
-;;; salt-vi.el --- Vi emulator -*- lexical-binding: t; -*-
+;;; sulfur.el --- Vi emulator -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2020 cervelleless
 ;;
@@ -8,7 +8,7 @@
 ;; Modified: November 27, 2020
 ;; Version: 0.0.1
 ;; Keywords:
-;; Homepage: https://github.com/felix/salt-vi
+;; Homepage: https://github.com/felix/sulfur
 ;; Package-Requires: ((emacs 27.1) (cl-lib "0.5"))
 ;;
 ;; This file is not part of GNU Emacs.
@@ -26,7 +26,7 @@
 (require 'hydra)
 ;; (require 'bind-key)
 ;; sulfur, salt and mercury.
-(defhydra salt-vi (:pre (progn (set-cursor-color "#40e0d0")
+(defhydra sulfur (:pre (progn (set-cursor-color "#40e0d0")
                                (setq cursor-type 'box))
                    :post (progn (setq cursor-type 'bar)
                                 (set-cursor-color "#ffffff"))
@@ -54,9 +54,10 @@
   ("j" next-line)
   ("k" previous-line)
   ("l" (lambda () (interactive)
+         (forward-char)
          (if (eolp)
-             (message "End of line")
-           (forward-char))))
+             (progn (message "End of line")
+                    (backward-char 1)))))
   ("m" nil)
   ("n" nil)
   ("o" (lambda () (interactive)
@@ -70,7 +71,7 @@
   ("s" swiper)
   ("t" nil)
   ("uu" undo-tree-undo)
-  ("uv" undo-tree-visualize)
+  ("uv" undo-tree-visualize :exit t)
   ("v" nil)
   ("w" forward-word)
   ("x" (delete-char 1))
@@ -109,10 +110,11 @@
   (":ww" save-buffer)
   ("-" er/expand-region)
   ("^" crux-move-beginning-of-line)
-  ("$" move-end-of-line)
+  ("$" (lambda () (interactive) (progn (move-end-of-line nil) (backward-char))))
   ("M-x" counsel-M-x :color blue)
+  ("<right>" sulfur/lambda-l)
   ("<escape>" keyboard-escape-quit)
-  ("SPC" salt-launcher/body :color blue))
+  ("SPC" salt/leader/body :color blue))
 
 (define-key global-map [escape] (lambda ()
                                   (interactive)
@@ -120,10 +122,13 @@
                                       (keyboard-escape-quit)
                                     (unless (bolp)
                                       (backward-char))
-                                    (salt-vi/body))))
+                                    (sulfur/body))))
 
-(add-hook 'minibuffer-setup-hook 'transient-quit-all)
-(add-hook 'minibuffer-exit-hook 'salt-vi/body)
 
-(provide 'salt-vi)
-;;; salt-vi.el ends here
+(add-hook 'minibuffer-setup-hook 'sulfur/nil)
+(add-hook 'minibuffer-exit-hook 'sulfur/body)
+(add-hook 'eshell-mode-hook 'sulfur/nil)
+(add-hook 'undo-tree-visualizer-mode 'sulfur/nil)
+(advice-add 'undo-tree-visualizer-quit :after 'sulfur/body)
+(provide 'sulfur)
+;;; sulfur.el ends here
