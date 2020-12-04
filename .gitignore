@@ -3,3 +3,9 @@ quelpa/*
 private/*
 *.elc
 *~
+var/*
+elisp/tmp
+.local/*
+transient/*
+recentf
+
