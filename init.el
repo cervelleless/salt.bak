@@ -50,8 +50,8 @@
 (require 'salt-ui)
 (require 'salt-counsel)
 (require 'salt-complete)
-(require 'salt-leader)
-(require 'salt-vi)
+(require 'mercury)
+(require 'sulfur)
 
 (provide 'init)
 ;;; init.el ends here
