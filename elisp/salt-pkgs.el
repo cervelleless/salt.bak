@@ -19,6 +19,13 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
+;; (require 'quelpa-use-package)
+;; (require 'bind-key)
+
+;; core packages
+;; very useful libraries
 (use-package f          ;; files
   :defer t)
 (use-package dash       ;; lists
@@ -33,14 +40,6 @@
   :defer t) 
 
 
-(eval-when-compile
-  (require 'use-package))
-;; (require 'quelpa-use-package)
-
-;; (require 'bind-key)
-
-;; core packages
-
 ;; auto-compile
 (use-package auto-compile
   :defer t
@@ -48,16 +47,20 @@
   (auto-compile-on-save-mode)
   (auto-compile-on-load-mode))
 
-;; dash
-(use-package dash
-  :defer t)
-
 (use-package diminish
   :defer t)
 
 (use-package rainbow-mode
 ;;  :quelpa (rainbow-mode :fetcher github :repo "emacsmirror/rainbow-mode")
   :defer t)
+
+(use-package helpful
+  :defer t
+  :init
+  (setq counsel-describe-function-function #'helpful-callable)
+  (setq counsel-describe-variable-function #'helpful-variable))
+
+
 
 ;; emojify
 ;; (use-package emojify
@@ -98,7 +101,6 @@
   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 
 ;; lispy
-
 (use-package lispy
   :defer t
   :init
@@ -151,11 +153,15 @@
 ;; crux
 (use-package crux
   :defer t)
+;; drag-stuff
+(use-package drag-stuff
+  :defer t)
+
+
 
 ;; ;; super save
 (use-package super-save
    :defer t)
-
 
 ;; eazy-kill
 (use-package easy-kill
@@ -178,15 +184,8 @@
 ;;   )
 
 
-;; ;;
-(use-package anzu
-  :defer t)
 ;;
 (use-package ranger
-  :defer t)
-
-;; wgrep
-(use-package wgrep
   :defer t)
 
 ;; benchmark
@@ -199,6 +198,8 @@
 ;; flyspell
 (use-package flyspell
   :defer t
+  :init
+  (setq ispell-program-name "/usr/local/bin/aspell")
   :hook (emacs-lisp-mode . flyspell-prog-mode))
 
 

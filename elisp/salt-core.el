@@ -59,13 +59,11 @@
 ;;; font and frame size
 ;; frame size
 (setq initial-frame-alist
-      '((top . 1) (left . 10) (width . 280) (height . 150)))
+      '((top . 1) (left . 15) (width  . 250) (height . 150)))
 
 ;; font
 (add-to-list 'default-frame-alist
-             '(font . "M+ 1mn Light-18"))
-
-
+             '(font . "M+ 1mn Light-20"))
 
 ;; setup by myself
 (defun salt/reload-emacs-configuration ()

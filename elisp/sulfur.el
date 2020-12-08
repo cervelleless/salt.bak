@@ -20,6 +20,19 @@
 ;;; Code:
 
 
+;;  alternative methold the keymap
+
+
+;;(setq mymap (make-sparse-keymap))
+;;(define-key mymap (kbd "f f") 'counsel-find-file)
+;;(defun sulfur-cmd ()
+;;  (interactive)
+;;  (set-transient-map mymap (lambda ()
+;;                          	(not (equal (this-command-keys) (kbd "C-g"))))))
+
+;;(global-set-key (kbd "<f12>") 'sulfur-cmd)
+
+
 
 
 (require 'crux)
@@ -27,11 +40,11 @@
 ;; (require 'bind-key)
 ;; sulfur, salt and mercury.
 (defhydra sulfur (:pre (progn (set-cursor-color "#40e0d0")
-                               (setq cursor-type 'box))
-                   :post (progn (setq cursor-type 'bar)
-                                (set-cursor-color "#ffffff"))
-                   :hint nil
-                   :color pink)
+                              (setq cursor-type 'box))
+                       :post (progn (setq cursor-type 'bar)
+                                    (set-cursor-color "#ffffff"))
+                       :hint nil
+                       :color pink)
   "Salt vi emulator"
   ("a" (lambda () (interactive)
          (progn (unless (eolp)
@@ -44,7 +57,9 @@
           (delete-char 1)))
   ("dw" kill-word)
   ("e" nil)
-  ("f" nil)
+  ("ff" avy-goto-char-timer)
+  ("fj" avy-next)
+  ("fk" avy-prev)
   ("gg" beginning-of-buffer)
   ("h" (lambda () (interactive)
          (if (bolp)
@@ -65,13 +80,15 @@
   ("p" yank)
   ("q" nil)
   ("r" (lambda () (interactive)
-           (insert (read-char))
-           (delete-char 1)
-           (backward-char)))
-  ("s" swiper)
+         (insert (read-char))
+         (delete-char 1)
+         (backward-char)))
+  ("sw" swiper)
+  ("sr" anzu-query-replace)
+  ("ss" avy-goto-char-2) 
   ("t" nil)
   ("uu" undo-tree-undo)
-  ("uv" undo-tree-visualize :exit t)
+  ("uv" undo-tree-visualize :color blue)
   ("v" nil)
   ("w" forward-word)
   ("x" (delete-char 1))
@@ -124,7 +141,7 @@
                                       (backward-char))
                                     (sulfur/body))))
 
-
+(add-hook 'after-init-hook 'sulfur/body)
 (add-hook 'minibuffer-setup-hook 'sulfur/nil)
 (add-hook 'minibuffer-exit-hook 'sulfur/body)
 (add-hook 'eshell-mode-hook 'sulfur/nil)

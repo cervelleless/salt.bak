@@ -37,6 +37,7 @@
 (setq straight-use-package-by-default t)
 (straight-use-package 'use-package)
 (setq use-package-always-ensure t)
+;;(setq straight-check-for-modifications 'live)
 (use-package git) ;; ensure we can install from git sources
 
 ;; test straight.el

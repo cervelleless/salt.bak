@@ -8,7 +8,7 @@
 ;; Modified: December 02, 2020
 ;; Version: 0.0.1
 ;; Keywords:
-;; Homepage: https://github.com/felix/salt-counsel
+;; Homepage: https://github.com/cervelleless/salt-counsel
 ;; Package-Requires: ((emacs 27.1) (cl-lib "0.5"))
 ;;
 ;; This file is not part of GNU Emacs.
@@ -27,9 +27,18 @@
 (use-package hydra
   :defer t)
 
+;; wgrep
+(use-package wgrep
+  :defer t)
+
+;; avy
+(use-package avy
+  :defer t)
+
 ;; ivy counsel swiper
 (use-package ivy
   :defer t
+  :commands ivy-wgrep-change-to-wgrep-mode
   :init
   (setq ivy-use-virutal-buffers t
         enable-recursive-minibuffers t
@@ -68,14 +77,15 @@
 (use-package projectile
   :defer t
   :init
-  (setq projectile-completion-system 'ivy))
+  (setq projectile-completion-system 'ivy)
+  :hook (after-init . projectile-mode))
 
 (use-package counsel-projectile
   :defer t
   :requires (projectile counsel))
 
-;; avy
-(use-package avy
+;; anzy
+(use-package anzu
   :defer t)
 
 (provide 'salt-counsel)
