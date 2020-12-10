@@ -59,16 +59,20 @@
 ;;; font and frame size
 ;; frame size
 (setq initial-frame-alist
-      '((top . 1) (left . 15) (width  . 250) (height . 150)))
+      '((top . 1) (left . 10) (width  . 280) (height . 150)))
 
 ;; font
 (add-to-list 'default-frame-alist
-             '(font . "M+ 1mn Light-20"))
+             '(font . "M+ 1mn Light-18"))
 
-;; setup by myself
-(defun salt/reload-emacs-configuration ()
-  (interactive)
-  (load-file (expand-file-name "init.el" user-emacs-directory)))
+(setq initial-scratch-message ";; Welcome to Salt!! This buffer is for text that is not saved.\n")
+(setq initial-major-mode 'text-mode)
+
+
+;;;; setup by myself
+;; (defun salt/reload-emacs-configuration ()
+;;  (interactive)
+;;  (load-file (expand-file-name "init.el" user-emacs-directory)))
 
 (provide 'salt-core)
 ;;; salt-core.el ends here
