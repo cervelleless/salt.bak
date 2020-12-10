@@ -21,67 +21,79 @@
 (require 'hydra)
 
 ;; leader
-(defhydra mercury (:color blue :columns 5 :post sulfur/body)
+(defhydra mercury (:color blue :columns 5)
   "Launch!"
   ("b" mercury-buffers/body "+buffers")
   ("f" mercury-files/body "+files")
-  ("h" mercury-helps/body "+help")
+  ("h" mercury-help/body "+help & info")
   ("p" mercury-project/body "+projects")
-  ("t" mercury-toggle/body "+toggles")
+  ;; ("s" mercury-search/body "+search")
+  ("t" mercury-toggles/body "+toggles")
   ("q" nil "cancel")
   ("SPC" counsel-M-x "counsel-M-x")
-  ("<escape>" sulfur/body "Exit"))
+  ("<escape>" enter-sulfur-cmd-mode "Exit"))
 
-;; Toggles
-(defhydra mercury-toggle (:color amaranth :clounms 5 :post salfur/body)
-  "Toggle command"
-  ("l" toggle-truncate-lines "Truncating of long line")
-  ("e" eshell :color blue))
-
-;; Helpful
-(defhydra mercury-helps (:color blue :cloumns 5 :post sulfur/body)
-  "Helpful description"
+;; Help & Info
+(defhydra mercury-help (:color blue :columns 5)
+  "Help & Info"
   ("f" helpful-callable "Describe function")
   ("F" helpful-function "Describe function")
   ("c" helpful-command "Describe interactive functions")
   ("k" helpful-key "Describe key")
   ("m" describe-mode "Describe mode")
-  ("v" help-variable "Describe variable")
-  ("<escape>" sulfur/body "Exit" :exit t))
+  ("v" helpful-variable "Describe variable")
+  ("<escape>" enter-sulfur-cmd-mode "Exit"))
 
-;; search
-(defhydra mercury-search (:color blue :cloumns 5 :post sulfur/body)
-  "Searching Toolkit"
-  )
 ;; buffers
-(defhydra mercury-buffers (:color amaranth :columns 5 :post sulfur/body)
-  "Buffer Toolset"
+(defhydra mercury-buffers (:color blue :columns 5)
+  "Buffers & Bookmarks"
   ("b" ibuffer "ibuffer")
+  ("c" counsel-bookmark "counsel-bookmark")
   ("n" next-buffer "Next buffer")
   ("p" previous-buffer "Previous buffer")
   ("s" basic-save-buffer "Save buffer")
-  ("<escape>" sulfur/body "Exit" :exit t))
+  ("<escape>" enter-sulfur-cmd-mode "Exit")
+  )
 
-;; files
-(defhydra mercury-files (:color blue :columns 5 :foreign-keys run :post sulfur/body)
+;; file
+(defhydra mercury-files (:color blue :columns 5)
   "File Toolset"
-  ("f" counsel-find-file "Find file" :exit t)
-  ("d" deer "Launch dired in a minimal ranger window" :color blue)
-  ("q" mercury/body "Previous page" :exit t)
+  ("f" counsel-find-file "Find file")
+  ("d" deer "deer")
+  ("q" mercury/body "Previous page")
   ("r" counsel-recentf "Recent file")
   ("s" save-buffer "Save file")
-  ("<escape>" sulfur/body "Exit" :exit t))
+  ("<escape>" (enter-sulfur-cmd-mode) "Exit"))
+
+(defhydra mercury-search (:color blue :columns 5)
+  "Searching Toolkit"
+  ("p" counsel-projectile-rg "Search the current project with rg"))
+  ;; "File Toolset"
+  ;; ("f" counsel-find-file "Find file")
+  ;; ("d" deer "deer")
+  ;; ("q" mercury/body "Previous page")
+  ;; ("r" counsel-recentf "Recent file")
+  ;; ("s" save-buffer "Save file")
+  ;; ("<escape>" (enter-sulfur-cmd-mode) "Exit"))
+
+  
+;; toggles
+(defhydra mercury-toggles (:color blue :columns 5)
+  "Mercury toggles"
+  ("l" toggle-truncate-lines "Truncating of long line")
+  ("s" eshell "Eshell")
+  ("<escape>" enter-sulfur-cmd-mode "Exit"))
 
 ;;  projectile
-(defhydra mercury-project (:color amaranth :columns 5 :post sulfur/body)
+(defhydra mercury-project (:color blue :columns 5)
   "Project"
-  ("a" projectile-add-known-project "Add new project" :color blue)
-  ("b" counsel-projectile-switch-to-buffer "Switch to project buffer" :color blue)
+  ("a" projectile-add-known-project "Add new project")
+  ("b" counsel-projectile-switch-to-buffer "Switch to project buffer")
   ("c" project-compile "Compile in project")
-  ("f" counsel-projectile-find-file "Find file in project" :color blue)
+  ("f" counsel-projectile-find-file "Find file in project")
   ("i" projectile-invalidate-cache "Invalidate project cache")
-  ("p" counsel-projectile-switch-project "Switch project" :exit t)
-  ("<escape>" sulfur/body "Exit" :exit t))
+  ("p" counsel-projectile-switch-project "Switch project")
+  ("<escape>" enter-sulfur-cmd-mode "Exit"))
 
 
 (provide 'mercury)
