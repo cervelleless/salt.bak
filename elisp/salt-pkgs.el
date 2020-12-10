@@ -24,6 +24,10 @@
 ;; (require 'quelpa-use-package)
 ;; (require 'bind-key)
 
+
+(use-package find-file-in-project
+  :defer t)
+
 ;; core packages
 ;; very useful libraries
 (use-package f          ;; files
@@ -59,8 +63,6 @@
   :init
   (setq counsel-describe-function-function #'helpful-callable)
   (setq counsel-describe-variable-function #'helpful-variable))
-
-
 
 ;; emojify
 ;; (use-package emojify
