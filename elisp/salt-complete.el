@@ -2,7 +2,7 @@
 ;;
 ;; Copyright (C) 2020 cervelleless
 ;;
-;; Author: cervelleless <http://github/felix>
+;; Author: cervelleless <http://github.com/cervelleless>
 ;; Maintainer: cervelleless <cervelleless@gmail.com>
 ;; Created: December 02, 2020
 ;; Modified: December 02, 2020
@@ -25,7 +25,7 @@
 
 ;; company
 (use-package company
-  :defer t
+  :defer 2
   :init
   (setq company-idle-delay 0.25)
   (setq company-show-numbers t)
@@ -35,8 +35,7 @@
   ;; invert the navigation direction if the the completion popup-isearch-match
   ;; is displayed on top (happens near the bottom of windows)
   (setq company-tooltip-flip-when-above t)
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  :hook (after-init . global-company-mode))
 
 ;; yassnippet
 (use-package yasnippet
@@ -44,7 +43,11 @@
   :commands (yas-minor-mode yas-reload-all)
   :config
   (yas-reload-all)
-  (add-hook 'prog-mode-hook #'yas-minor-mode))
+  :hook (prog-mode . yas-minor-mode))
+
+(use-package auto-yasnippet
+  :defer t
+  )
 
 
 (provide 'salt-complete)
