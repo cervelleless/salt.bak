@@ -43,12 +43,6 @@
 ;; the path of core settings
 (add-to-list 'load-path (expand-file-name "elisp/" user-emacs-directory))
 
-;(progn
-;  (define-prefix-command 'salt-keymap)
-;  (define-key salt-keymap (kbd "f f") 'counsel-find-file)
-;)
-;(global-set-key (kbd "f") 'salt-keymap)
-
 ;;
 (require 'salt-core)
 (require 'salt-elpa)
