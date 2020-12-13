@@ -24,7 +24,7 @@
 ;; (require 'quelpa-use-package)
 ;; (require 'bind-key)
 
-
+;; find file with fd
 (use-package find-file-in-project
   :defer t)
 
@@ -33,15 +33,15 @@
 (use-package f          ;; files
   :defer t)
 (use-package dash       ;; lists
-  :defer t) 
+  :defer t)
 (use-package ht         ;; hash-tables
-  :defer t) 
+  :defer t)
 (use-package s          ;; strings
   :defer t)
 (use-package a         ;; association lists
   :defer t)
 (use-package anaphora  ;; anaphora
-  :defer t) 
+  :defer t)
 
 
 ;; auto-compile
@@ -64,6 +64,8 @@
   (setq counsel-describe-function-function #'helpful-callable)
   (setq counsel-describe-variable-function #'helpful-variable))
 
+
+
 ;; emojify
 ;; (use-package emojify
 ;;  :ensure t
@@ -79,7 +81,7 @@
 (use-package eshell-z
   :defer t
   :hook ((eshell-mode . (lambda () (require 'eshell-z)))
-         (eshell-z-change-dir .  (lambda () (eshell/pushd (eshell/pwd))))))
+	 (eshell-z-change-dir .  (lambda () (eshell/pushd (eshell/pwd))))))
 
 (use-package esh-help
   :defer t
@@ -100,28 +102,18 @@
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
   :defer t
-  :hook (emacs-lisp-mode . rainbow-delimiters-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
-;; lispy
-(use-package lispy
-  :defer t
-  :init
-  (setq show-paren-delay 0
-        show-paren-style 'parenthesis)
-  :hook
-  (emacs-lisp-mode . lispy-mode)
-  (racket-mode . lispy-mode)
-  (lispy-mode . show-paren-mode))
 
 ;; undo tree
 (use-package undo-tree
-;;  :quelpa (undo-tree :fetcher github :repo "emacsmirror/undo-tree")
+  ;;  :quelpa (undo-tree :fetcher github :repo "emacsmirror/undo-tree")
   :defer t
   :commands (undo-tree-undo global-undo-tree-mode)
   :config
   (global-undo-tree-mode)
   (setq undo-tree-visualizer-timestamps t
-        undo-tree-visualizer-diff t))
+	undo-tree-visualizer-diff t))
 
 ;; recentf
 (use-package recentf
@@ -129,7 +121,7 @@
   :commands recentf-mode
   :config
   (setq recentf-max-saved-items 200
-        recentf-max-menu-items 15)
+	recentf-max-menu-items 15)
   (recentf-mode))
 
 ;; magit
@@ -150,16 +142,19 @@
 
 ;; js2-mode
 (use-package js2-mode
+  :mode ("\\.js\\'" . js2-mode)
+  :init
+  (setq js-indent-level 2)
+  :hook (js2-mode . subword-mode)
   :defer t)
+
 
 ;; crux
 (use-package crux
   :defer t)
 ;; drag-stuff
-(use-package drag-stuff
-  :defer t)
-
-
+;; (use-package drag-stuff
+;;   :defer t)
 
 ;; ;; super save
 (use-package super-save
@@ -171,13 +166,12 @@
 
 ;; smartparens
 (use-package smartparens
-   :defer t)
+  :defer t
+  :hook
+  (js2-mode . smartparens-mode))
 
 
 ;; ;; ob-racket
-;; (use-package racket-mode
-;;   :defer t
-;;   :commands (racket-mode racket-xp-mode))
 
 ; (use-package ob-racket
 ;;   :defer t
@@ -204,7 +198,10 @@
   (setq ispell-program-name "/usr/local/bin/aspell")
   :hook (emacs-lisp-mode . flyspell-prog-mode))
 
-
+(use-package flycheck
+  :defer t
+  :hook
+  (prog-mode . flycheck-mode))
 
 (provide 'salt-pkgs)
 ;;; salt-pkgs.el ends here
