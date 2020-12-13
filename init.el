@@ -48,6 +48,7 @@
 (require 'salt-elpa)
 (require 'salt-pkgs)
 (require 'salt-ui)
+(require 'salt-lisp)
 (require 'salt-counsel)
 (require 'salt-complete)
 (require 'mercury)

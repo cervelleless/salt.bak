@@ -1,4 +1,4 @@
-;;; salt-lisps.el --- coding enviroment for guile elisp scheme -*- lexical-binding: t; -*-
+;;; salt-lisp.el --- coding enviroment for guile elisp scheme -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2020 cervelleless
 ;;
@@ -49,5 +49,5 @@
 
 
 
-(provide 'salt-lisps)
-;;; salt-lisps.el ends here
+(provide 'salt-lisp)
+;;; salt-lisp.el ends here
