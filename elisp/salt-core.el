@@ -48,6 +48,7 @@
 ;; delete menu-bar
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
+(scroll-bar-mode -1)
 (tool-bar-mode -1)
 
 ;; ESC cancel all
@@ -55,6 +56,9 @@
 
 ;; Set up the visible bell
 (setq visible-bell t)
+
+;; https://www.emacswiki.org/emacs/SavePlace
+(save-place-mode 1)
 
 ;;; font and frame size
 ;; frame size
@@ -68,6 +72,8 @@
 (setq initial-scratch-message ";; Welcome to Salt!! This buffer is for text that is not saved.\n")
 (setq initial-major-mode 'text-mode)
 
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;;;; setup by myself
 ;; (defun salt/reload-emacs-configuration ()
