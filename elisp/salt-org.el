@@ -22,6 +22,7 @@
 ;; org
 (use-package org
   :defer t
+  :mode ("\\.org\\'" . org-mode)
   :init
   (setq org-directory "~/Repository/org/"
         org-todo-keywords '((sequence "TODO(t)" "IN-PROGRESS(p!)" "|" "DONE(d!)" "CANCEL(c@)"))
@@ -36,6 +37,11 @@
                                 ("m" "Mottos" entry (file+datetree "/Users/felix/Repository/org/capture/mottos.org" "Mottos")
                                  "* %?\nEntered on %U\n  %i\n  %a"))
         org-src-window-setup 'split-window-right))
+
+(use-package worf
+  :defer t
+  :hook
+  (org-mode . worf-mode))
 
 
 (provide 'salt-org)
