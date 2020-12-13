@@ -27,7 +27,7 @@
   ("f" mercury-files/body "+files")
   ("h" mercury-help/body "+help & info")
   ("p" mercury-project/body "+projects")
-  ;; ("s" mercury-search/body "+search")
+  ("s" mercury-search/body "+search")
   ("t" mercury-toggles/body "+toggles")
   ("q" nil "cancel")
   ("SPC" counsel-M-x "counsel-M-x")
@@ -42,6 +42,14 @@
   ("k" helpful-key "Describe key")
   ("m" describe-mode "Describe mode")
   ("v" helpful-variable "Describe variable")
+  ("<escape>" enter-sulfur-cmd-mode "Exit"))
+
+;; Help & Info
+(defhydra mercury-search (:color blue :columns 5)
+  "Search"
+  ("a" anzu-query-replace "Anzu Query-Replace")
+  ("b" swiper "Search in current buffer")
+  ("p" counsel-projectile-rg "Search the current project with rg")
   ("<escape>" enter-sulfur-cmd-mode "Exit"))
 
 ;; buffers
@@ -65,18 +73,6 @@
   ("s" save-buffer "Save file")
   ("<escape>" (enter-sulfur-cmd-mode) "Exit"))
 
-(defhydra mercury-search (:color blue :columns 5)
-  "Searching Toolkit"
-  ("p" counsel-projectile-rg "Search the current project with rg"))
-  ;; "File Toolset"
-  ;; ("f" counsel-find-file "Find file")
-  ;; ("d" deer "deer")
-  ;; ("q" mercury/body "Previous page")
-  ;; ("r" counsel-recentf "Recent file")
-  ;; ("s" save-buffer "Save file")
-  ;; ("<escape>" (enter-sulfur-cmd-mode) "Exit"))
-
-  
 ;; toggles
 (defhydra mercury-toggles (:color blue :columns 5)
   "Mercury toggles"
@@ -90,6 +86,7 @@
   ("a" projectile-add-known-project "Add new project")
   ("b" counsel-projectile-switch-to-buffer "Switch to project buffer")
   ("c" project-compile "Compile in project")
+  ("d" projectile-remove-known-project "Remove known project")
   ("f" counsel-projectile-find-file "Find file in project")
   ("i" projectile-invalidate-cache "Invalidate project cache")
   ("p" counsel-projectile-switch-project "Switch project")
