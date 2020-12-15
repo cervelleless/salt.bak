@@ -47,12 +47,6 @@
   :config
   (define-key ivy-minibuffer-map (kbd "ESC") 'minibuffer-keyboard-quit))
 
-(use-package ivy-rich
-  :defer t
-  :after ivy
-  :hook (ivy-mode . ivy-rich-mode)
-  :config
-  (setq ivy-rich-parse-remote-buffer nil))
 
 (use-package swiper
   :defer t
@@ -82,7 +76,22 @@
 
 (use-package counsel-projectile
   :defer t
-  :requires (projectile counsel))
+  :hook (after-init . counsel-projectile-mode))
+
+(use-package all-the-icons
+  :defer t)
+;; You must run (all-the-icons-install-fonts) one time after
+;; installing this package!
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :hook (counsel-projectile-mode . all-the-icons-ivy-rich-mode))
+
+(use-package ivy-rich
+  :defer t
+  :hook (all-the-icons-ivy-rich-mode . ivy-rich-mode)
+  :config
+  (setq ivy-rich-parse-remote-buffer nil))
 
 ;; anzy
 (use-package anzu
