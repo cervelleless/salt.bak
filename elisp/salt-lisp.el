@@ -19,6 +19,8 @@
 ;;
 ;;; Code:
 
+(eval-when-compile
+  (require 'use-package))
 
 ;; lispy
 (use-package lispy
@@ -28,6 +30,7 @@
         show-paren-style 'parenthesis)
   :hook
   (emacs-lisp-mode . lispy-mode)
+  (scheme-mode . lispy-mode)
   (racket-mode . lispy-mode)
   (lispy-mode . show-paren-mode))
 
