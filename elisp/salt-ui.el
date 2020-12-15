@@ -21,7 +21,7 @@
 
 (eval-when-compile
   (require 'use-package))
-(require 'bind-key)
+;; (require 'bind-key)
 
 ;; theme
 (use-package doom-themes
@@ -29,9 +29,6 @@
               doom-themes-enable-italic t) ; if nil, italics is universally disabled
   :config
   (load-theme 'doom-one t))
-
-;; You must run (all-the-icons-install-fonts) one time after
-;; installing this package!
 
 (use-package minions
   :defer t

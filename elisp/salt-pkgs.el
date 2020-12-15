@@ -71,23 +71,6 @@
 ;;  :ensure t
 ;;  :commands emojify-mode)
 
-;; eshell
-(use-package eshell
-  :defer t
-  :commands (eshell/pushd eshell/pwd)
-  :init
-  (setq eshell-directory-name (concat user-emacs-directory ".local/eshell/")))
-
-(use-package eshell-z
-  :defer t
-  :hook ((eshell-mode . (lambda () (require 'eshell-z)))
-	 (eshell-z-change-dir .  (lambda () (eshell/pushd (eshell/pwd))))))
-
-(use-package esh-help
-  :defer t
-  :config
-  (setup-esh-help-eldoc))
-
 ;; ace-window
 (use-package ace-window
   :defer t
@@ -135,19 +118,6 @@
 ;; markdown
 (use-package markdown-mode
   :defer t)
-
-;; web
-(use-package web
-  :defer t)
-
-;; js2-mode
-(use-package js2-mode
-  :mode ("\\.js\\'" . js2-mode)
-  :init
-  (setq js-indent-level 2)
-  :hook (js2-mode . subword-mode)
-  :defer t)
-
 
 ;; crux
 (use-package crux
