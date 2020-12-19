@@ -1,4 +1,4 @@
-;;; salt-counsel.el --- ivy counsel swiper and so on. -*- lexical-binding: t; -*-
+;;; salt-ivy.el --- ivy counsel swiper and so on. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2020 cervelleless
 ;;
@@ -29,7 +29,8 @@
 
 ;; wgrep
 (use-package wgrep
-  :defer t)
+  :defer t
+  :config (setq wgrep-auto-save-buffer t))
 
 ;; avy
 (use-package avy
@@ -38,6 +39,7 @@
 ;; ivy counsel swiper
 (use-package ivy
   :defer t
+  :diminish
   :commands ivy-wgrep-change-to-wgrep-mode
   :init
   (setq ivy-use-virutal-buffers t
@@ -70,13 +72,16 @@
 ;; projectile
 (use-package projectile
   :defer t
-  :init
-  (setq projectile-completion-system 'ivy)
-  :hook (after-init . projectile-mode))
+  :config
+  (setq projectile-completion-system 'ivy
+        projectile-enable-caching t
+	projectile-indexing-method 'hybrid
+        projectile-ignored-projects '("~/" "/tmp")))
 
 (use-package counsel-projectile
   :defer t
-  :hook (after-init . counsel-projectile-mode))
+  :hook (ivy-mode . counsel-projectile-mode)
+  :config (setq counsel-projectile-sort-files t))
 
 (use-package all-the-icons
   :defer t)
@@ -97,5 +102,5 @@
 (use-package anzu
   :defer t)
 
-(provide 'salt-counsel)
-;;; salt-counsel.el ends here
+(provide 'salt-ivy)
+;;; salt-ivy.el ends here
