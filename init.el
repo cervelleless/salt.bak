@@ -44,18 +44,7 @@
 (add-to-list 'load-path (expand-file-name "elisp/" user-emacs-directory))
 
 ;;
-(require 'salt-core)
-(require 'salt-elpa)
-(require 'salt-pkgs)
-(require 'salt-counsel)
-(require 'salt-eshell)
-(require 'salt-ui)
-(require 'salt-lisp)
-(require 'salt-complete)
-(require 'salt-org)
-(require 'salt-web)
-(require 'mercury)
-(require 'sulfur)
+(require 'salt)
 
 (provide 'init)
 ;;; init.el ends here

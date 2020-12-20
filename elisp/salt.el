@@ -1,4 +1,4 @@
-;;; salt-core.el --- The base matter of salt. -*- lexical-binding: t; -*-
+;;; salt.el --- The base matter of salt. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2020 cervelleless
 ;;
@@ -73,12 +73,32 @@
 (setq initial-major-mode 'text-mode)
 
 
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(require 'salt-elpa)
+(require 'salt-pkgs)
+(require 'salt-ivy)
+(require 'salt-eshell)
+(require 'salt-ui)
+(require 'salt-lisp)
+(require 'salt-complete)
+(require 'salt-org)
+(require 'salt-web)
+(require 'mercury)
+(require 'sulfur)
 
+
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'special-mode-hook 'quit-sulfur-cmd-mode)
 ;;;; setup by myself
 ;; (defun salt/reload-emacs-configuration ()
 ;;  (interactive)
 ;;  (load-file (expand-file-name "init.el" user-emacs-directory)))
 
-(provide 'salt-core)
-;;; salt-core.el ends here
+
+
+
+
+
+
+(provide 'salt)
+;;; salt.el ends here
