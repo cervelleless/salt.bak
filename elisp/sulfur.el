@@ -19,8 +19,8 @@
 ;;
 ;;; Code:
 
-(require 'bind-key)
-(require 'crux)
+;; (require 'bind-key)
+;; (require 'crux)
 
 (defvar sulfur-cmd-map (make-sparse-keymap)
   "Keymap for sulfur-cmd-mode.")
@@ -110,22 +110,35 @@
     (yank)))
   
 ;;;###autoload
-  (defun sulfur/delete-relatives ()
-    "Erase text relative commands."
-    (interactive)
-    (if (use-region-p)
-	(call-interactively 'kill-region)
-      (let ((key (read-char)))
-	(if (sulfur/char-existp key)
-	    (cond ((char-equal key ?b) (backward-kill-word))
-		  ((char-equal key ?d) (crux-kill-whole-line))
-		  ((char-equal key ?w) (progn (forward-word)
-					      (backward-word)
-					      (kill-word 1)))
-		  ((char-equal key ?0) (kill-line 0))
-		  ((char-equal key ?$) (kill-line 1))
-		  (t (message "d %s is undefined" (char-to-string key))))
-	  (message "Quit")))))
+(defun sulfur/delete-relatives ()
+  "Erase text relative commands."
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'kill-region)
+    (let ((key (read-char)))
+      (if (sulfur/char-existp key)
+	  (cond ((char-equal key ?b) (backward-kill-word))
+		((char-equal key ?d) (crux-kill-whole-line))
+		((char-equal key ?w) (progn (forward-word)
+					    (backward-word)
+					    (kill-word 1)))
+		((char-equal key ?0) (kill-line 0))
+		((char-equal key ?$) (kill-line 1))
+		(t (message "d %s is undefined" (char-to-string key))))
+	(message "Quit")))))
+
+;;;###autoload
+(defun sulfur/colon-cmd ()
+  "Ex-like command."
+  (interactive)
+  (let ((key (read-string ":")))
+    (cond ((string-equal key "w") (call-interactively 'save-buffer))
+          ((string-equal key "wq") (progn (call-interactively 'save-buffer)
+                                         (quit-window)
+                                         (switch-to-buffer "*astrolabe*")))
+	  ((string-equal key "q!") (progn (quit-window)
+					 (switch-to-buffer "*astrolabe*")))
+          (t (message "%s is undefined" key)))))
 
 ;;;###autoload
 (defun sulfur/quit-or-kmacro ()
@@ -170,7 +183,7 @@
 	   ;; ("d$" . (kill-line 1))
 	   ;; ("d0" . (kill-line 0))
 	   ("e" . nil)
-	   ("f" . isearch-forward)
+	   ("f" . nil)
 	   ("gg" . beginning-of-buffer)
 	   ("h" . (lambda () (interactive)
 		    (if (bolp)
@@ -205,7 +218,7 @@
 	   ("t" . nil)
 	   ("uu" . undo-tree-undo)
 	   ("uv" . undo-tree-visualize)
-	   ("v" . nil)
+	   ("v" . set-mark-command)
 	   ("w" . forward-to-word)
 	   ("x" . delete-char)
 	   ("y" . sulfur/copy-or-yank)
@@ -258,12 +271,8 @@
 	   ("+" . nil)
 	   ("_" . nil)
 	   ("=" . nil)
-	   (":!" . shell-command)
-	   (":ww" . save-buffer)
-	   (":wq" . (lambda () (interactive)
-		      (progn (call-interactively 'save-buffer)
-			     (quit-window)
-			     (switch-to-buffer "*scratch*"))))
+	   ("/" . isearch-forward)
+	   (":" . sulfur/colon-cmd)
 	   ("-" . er/expand-region)
 	   ("^" . (crux-move-beginning-of-line nil))
 	   ("$" . (lambda () (interactive)
@@ -285,11 +294,7 @@
                                       (backward-char))
                                     (enter-sulfur-cmd-mode))))
 
-;; (add-hook 'after-init-hook 'sulfur/body)
-;; (add-hook 'minibuffer-setup-hook 'sulfur/nil)
-;; (add-hook 'minibuffer-exit-hook 'sulfur/body)
-;; (add-hook 'eshell-mode-hook 'sulfur/nil)
-;; (add-hook 'undo-tree-visualizer-mode 'sulfur/nil)
-;; (advice-add 'undo-tree-visualizer-quit :after 'sulfur/body)
+(define-key special-mode-map [remap scroll-up-command] 'mercury/body)
+
 (provide 'sulfur)
 ;;; sulfur.el ends here
