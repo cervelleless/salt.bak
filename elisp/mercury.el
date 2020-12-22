@@ -64,21 +64,29 @@
   )
 
 ;; file
-(defhydra mercury-files (:color blue :columns 5)
-  "File Toolset"
-  ("f" counsel-find-file "Find file")
-  ("d" deer "deer")
-  ("q" mercury/body "Previous page")
-  ("r" counsel-recentf "Recent file")
-  ("s" save-buffer "Save file")
+(defhydra mercury-files (:color blue :columns 5 :hint nil)
+  "
++file:
+  _f_: Find file        _d_: deer        _q_: Previous page
+  _r_: Recent file      _s_: Save file"
+  ("f" counsel-find-file)
+  ("d" deer)
+  ("q" mercury/body)
+  ("r" counsel-recentf)
+  ("s" save-buffer)
   ("<escape>" (enter-sulfur-cmd-mode) "Exit"))
 
 ;; toggles
-(defhydra mercury-toggles (:color blue :columns 5)
-  "Mercury toggles"
-  ("l" toggle-truncate-lines "Truncating of long line")
-  ("s" eshell "Eshell")
-  ("<escape>" enter-sulfur-cmd-mode "Exit"))
+(defhydra mercury-toggles (:color blue :columns 5 :hint nil)
+  "
+Toggle:
+  _l_: Line numbers        _t_: toggle-truncate-lines
+  _s_: eshell              _r_: Read-only mode"
+  ("t" toggle-truncate-lines)
+  ("l" display-line-numbers-mode)
+  ("s" eshell)
+  ("r" read-only-mode)
+  ("<escape>" enter-sulfur-cmd-mode "Exit" :exit t))
 
 ;;  projectile
 (defhydra mercury-project (:color blue :columns 5)

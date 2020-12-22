@@ -73,6 +73,18 @@
 (setq initial-major-mode 'text-mode)
 
 
+;; GNUS cann't send email error
+(add-to-list 'exec-path "/usr/local/bin/")
+;; shell-command-to-string error
+(setenv "PATH"
+        (concat "/usr/local/bin/:"
+		"/usr/local/opt/coreutils/libexec/gnubin/:"
+                (getenv "PATH")))
+;; eshll-mode command cann't found
+(eval-after-load 'esh-util
+  '(progn
+     (setq eshell-path-env (concat "/usr/local/bin/:" "/usr/local/opt/coreutils/libexec/gnubin/:" eshell-path-env))))
+
 (require 'salt-elpa)
 (require 'salt-pkgs)
 (require 'salt-ivy)
@@ -84,7 +96,7 @@
 (require 'salt-web)
 (require 'mercury)
 (require 'sulfur)
-
+(require 'azoth)
 
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
